@@ -25,18 +25,18 @@ export const allUsers = () => ({
   type: LIST_USERS,
   payload: {
     request: {
-      url: '/demo/users',
+      url: 'http://localhost:8080/auth/admin/realms/userManager/users',
     },
   },
 });
 
 export const addUser = (user) => {
-  console.log(`${UserService.getUsername()} added the user ${user.title}`);
+  console.log(`${UserService.getUserName()} added the user ${user.username}`);
   return {
     type: ADD_USER,
     payload: {
       request: {
-        url: '/demo/users',
+        url: 'http://localhost:8080/auth/admin/realms/userManager/users',
         method: HttpService.HttpMethods.POST,
         data: user,
       },
@@ -45,13 +45,13 @@ export const addUser = (user) => {
 };
 
 export const deleteUser = (user) => {
-  console.log(`${UserService.getUsername()} deletes the user ${user.title}`);
+  console.log(`${UserService.getUserName()} deletes the user ${user.username}`);
   return {
     type: DELETE_USER,
     payload: {
       user,
       request: {
-        url: `/demo/users/${user.id}`,
+        url: `http://localhost:8080/auth/admin/realms/userManager/users/${user.id}`,
         method: HttpService.HttpMethods.DELETE,
       },
     },

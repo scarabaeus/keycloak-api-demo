@@ -4,6 +4,7 @@ import StoreService from './services/StoreService';
 import UserService from './services/UserService';
 import RenderOnAnonymous from './components/RenderOnAnonymous';
 import RenderOnAuthenticated from './components/RenderOnAuthenticated';
+import UserList from './components/UserList';
 
 const store = StoreService.setup();
 
@@ -11,7 +12,6 @@ const App = () => (
   <Provider store={store}>
     <BrowserRouter>
       <div>
-        KeyCloak API Demo
         <RenderOnAnonymous>
           <div>
             <button
@@ -23,7 +23,13 @@ const App = () => (
           </div>
         </RenderOnAnonymous>
         <RenderOnAuthenticated>
-          <div>Authenticated Content</div>
+          <div style={{ width: '100%', display: 'flex' }}>
+            <div style={{ flex: 1 }}>KeyCloak API Demo</div>
+            <div style={{ flex: 1, textAlign: 'right' }}>
+              Welcome, {UserService.getFirstName()}
+            </div>
+          </div>
+          <UserList />
         </RenderOnAuthenticated>
       </div>
     </BrowserRouter>
