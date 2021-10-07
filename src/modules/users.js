@@ -25,7 +25,7 @@ export const allUsers = () => ({
   type: LIST_USERS,
   payload: {
     request: {
-      url: 'http://localhost:8080/auth/admin/realms/userManager/users',
+      url: 'http://localhost:8080/auth/admin/realms/UserManager/users',
     },
   },
 });
@@ -36,7 +36,7 @@ export const addUser = (user) => {
     type: ADD_USER,
     payload: {
       request: {
-        url: 'http://localhost:8080/auth/admin/realms/userManager/users',
+        url: 'http://localhost:8080/auth/admin/realms/UserManager/users',
         method: HttpService.HttpMethods.POST,
         data: user,
       },
@@ -51,7 +51,7 @@ export const deleteUser = (user) => {
     payload: {
       user,
       request: {
-        url: `http://localhost:8080/auth/admin/realms/userManager/users/${user.id}`,
+        url: `http://localhost:8080/auth/admin/realms/UserManager/users/${user.id}`,
         method: HttpService.HttpMethods.DELETE,
       },
     },

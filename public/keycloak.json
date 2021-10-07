@@ -1,5 +1,5 @@
 {
-  "realm": "userManager",
+  "realm": "UserManager",
   "auth-server-url": "http://localhost:8080/auth",
   "ssl-required": "external",
   "resource": "UserDemoApp",
