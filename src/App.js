@@ -26,7 +26,13 @@ const App = () => (
           <div style={{ width: '100%', display: 'flex' }}>
             <div style={{ flex: 1 }}>KeyCloak API Demo</div>
             <div style={{ flex: 1, textAlign: 'right' }}>
-              Welcome, {UserService.getFirstName()}
+              Welcome, {UserService.getFirstName()}{' '}
+              <button
+                className="btn btn-lg btn-warning"
+                onClick={() => UserService.doLogout()}
+              >
+                Log Out
+              </button>
             </div>
           </div>
           <UserList />
