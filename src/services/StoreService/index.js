@@ -13,10 +13,14 @@ const setup = () => {
     enhancers.push(applyMiddleware(logger));
   }
 
+  /* eslint-disable no-underscore-dangle */
   const composedEnhancers = compose(
     applyMiddleware(...middleware),
+    window.__REDUX_DEVTOOLS_EXTENSION__ &&
+      window.__REDUX_DEVTOOLS_EXTENSION__(),
     ...enhancers,
   );
+  /* eslint-enable */
 
   return createStore(rootReducer, composedEnhancers);
 };

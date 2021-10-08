@@ -1,12 +1,10 @@
 import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router';
 import {
   IconButton,
   ReactDataTable,
   Card,
-  CardHeader,
-  CardContent,
   Icon,
   IconNames,
   ButtonKind,
@@ -17,11 +15,14 @@ import {
 } from '@metromile-ebs/ebs-tui';
 import { allUsers, deleteUser } from '../../modules/users';
 import RenderOnRole from '../../components/RenderOnRole';
+import { PERMISSIONS, ROUTES } from '../../constants';
+import UserService from '../../services/UserService';
 
 const UserList = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const { users } = useSelector((state) => state);
-  const [css, theme] = useStyletron();
+  const [css] = useStyletron();
 
   useEffect(() => {
     dispatch(allUsers());
@@ -33,7 +34,7 @@ const UserList = () => {
         Header: 'User Name',
         accessor: 'username',
         disableSortBy: true,
-        url: ({ id }) => `/instances/${id}`,
+        url: ({ id }) => `${ROUTES.USER}/${id}`,
         truncate: false,
         Cell: GenericCell,
       },
@@ -75,43 +76,53 @@ const UserList = () => {
         minWidth: 60,
         maxWidth: 60,
         truncate: true,
-        formatter: (enabled) => (
-          <RenderOnRole roles={['user-delete']}>
-            <IconButton kind={ButtonKind.TERTIARY} label={IconNames.HEART}>
-              <Icon name={IconNames.TRASH} inheritColor />
-            </IconButton>
-          </RenderOnRole>
-        ),
+        formatter: (id) =>
+          !UserService.isSelf(id) ? (
+            <RenderOnRole roles={[PERMISSIONS.USER_DELETE]}>
+              <IconButton kind={ButtonKind.TERTIARY} label={IconNames.HEART}>
+                <Icon name={IconNames.TRASH} inheritColor />
+              </IconButton>
+            </RenderOnRole>
+          ) : null,
       },
     ],
     [],
   );
 
   return (
-    <RenderOnRole roles={['user-list']}>
+    <RenderOnRole roles={[PERMISSIONS.USER_LIST]}>
       <Card
         marginTop={0}
         header={
           <div
-            style={{
+            className={css({
               display: 'flex',
               paddingTop: '1rem',
               paddingBottom: '1rem',
-            }}
+            })}
           >
             <div
-              style={{ flex: 1, paddingLeft: '1.5rem', paddingTop: '0.5rem' }}
+              className={css({
+                flex: 1,
+                paddingLeft: '1.5rem',
+                paddingTop: '0.5rem',
+              })}
             >
               <Typography size={TypographySize.HEADING_LARGE}>Users</Typography>
             </div>
-            <RenderOnRole roles={['user-create']}>
+            <RenderOnRole roles={[PERMISSIONS.USER_CREATE]}>
               <div
-                style={{
+                className={css({
                   textAlign: 'right',
                   paddingRight: '1rem',
-                }}
+                })}
               >
-                <IconButton kind={ButtonKind.SECONDARY}>
+                <IconButton
+                  kind={ButtonKind.SECONDARY}
+                  onClick={() => {
+                    history.push(`${ROUTES.USER}/new`);
+                  }}
+                >
                   <Icon name={IconNames.PLUS} inheritColor />
                 </IconButton>
               </div>

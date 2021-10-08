@@ -1,12 +1,9 @@
 import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import {
   ThemeProvider,
-  TypographySize,
   PageContainer,
   PageContent,
-  PageHeader,
-  Typography,
   IconNames,
   ButtonKind,
   IconButton,
@@ -17,7 +14,11 @@ import StoreService from './services/StoreService';
 import UserService from './services/UserService';
 import RenderOnAnonymous from './components/RenderOnAnonymous';
 import RenderOnAuthenticated from './components/RenderOnAuthenticated';
+import PageHeader from './components/PageHeader';
 import UserList from './components/UserList';
+import NoMatch from './components/NoMatch';
+import UserForm from './components/UserForm';
+import { PERMISSIONS, ROUTES } from './constants';
 
 const AppContainer = ({ children }) => {
   const [css] = useStyletron();
@@ -52,42 +53,7 @@ const App = () => (
               </IconButton>
             </RenderOnAnonymous>
             <RenderOnAuthenticated>
-              <PageHeader sticky={true}>
-                <div style={{ width: '100%', display: 'flex' }}>
-                  <div style={{ flex: 1, paddingTop: '0.25rem' }}>
-                    <Typography size={TypographySize.HEADING_LARGE}>
-                      KeyCloak API Demo
-                    </Typography>
-                  </div>
-                  <div
-                    style={{
-                      flexBasis: '200px',
-                      display: 'inline-flex',
-                      marginLeft: 'auto',
-                      marginRight: '0',
-                    }}
-                  >
-                    <div
-                      style={{
-                        textAlign: 'right',
-                        paddingTop: '0.5rem',
-                      }}
-                    >
-                      <Typography>
-                        Welcome, {UserService.getFirstName()}
-                      </Typography>
-                    </div>
-                    <div style={{ flexBasis: '3rem', textAlign: 'right' }}>
-                      <IconButton
-                        kind={ButtonKind.QUATERNARY}
-                        onClick={() => UserService.doLogout()}
-                      >
-                        <Icon name={IconNames.LOG_OUT} inheritColor />
-                      </IconButton>
-                    </div>
-                  </div>
-                </div>
-              </PageHeader>
+              <PageHeader />
               <PageContainer
                 overflowY="visible"
                 paddingBottom="3rem"
@@ -96,7 +62,24 @@ const App = () => (
                 paddingTop="1rem"
               >
                 <PageContent padding={0}>
-                  <UserList />
+                  <Switch>
+                    <Route exact path="/">
+                      <UserList />
+                    </Route>
+                    <Route exact path={`${ROUTES.USER}/new`}>
+                      <UserForm newUser />
+                    </Route>
+                    <Route path={`${ROUTES.USER}/:userId`}>
+                      <UserForm
+                        disabled={
+                          !UserService.hasRole([PERMISSIONS.USER_UPDATE])
+                        }
+                      />
+                    </Route>
+                    <Route path="*">
+                      <NoMatch />
+                    </Route>
+                  </Switch>
                 </PageContent>
               </PageContainer>
             </RenderOnAuthenticated>

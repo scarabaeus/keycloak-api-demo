@@ -40,8 +40,10 @@ const getUserName = () => _kc.tokenParsed?.preferred_username;
 
 const getFirstName = () => _kc.tokenParsed?.given_name;
 
+const isSelf = (userId) => _kc.tokenParsed?.sub === userId;
+
 const hasRole = (roles) => {
-  console.log(_kc.tokenParsed?.realm_access?.roles);
+  // console.log(_kc.tokenParsed?.realm_access?.roles);
   return roles.some((role) => _kc.hasRealmRole(role));
 };
 
@@ -55,6 +57,7 @@ const UserService = {
   getUserName,
   getFirstName,
   hasRole,
+  isSelf,
 };
 
 export default UserService;
