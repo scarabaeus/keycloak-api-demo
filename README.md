@@ -71,3 +71,10 @@ In order to allow user and role administration using the KeyCloak Administration
  - https://stackoverflow.com/questions/46470477/how-to-get-keycloak-users-via-rest-without-admin-account/46558530#46558530
  - https://www.appsdeveloperblog.com/keycloak-rest-api-create-a-new-user/
  
+ ### Local Keycloak Instance Cheatsheet
+  - Starting local instance of KeyCloak:
+  ```
+  $ cd keycloak-14.0.0/bin
+  $ ./standalone.sh
+  ```
+  
