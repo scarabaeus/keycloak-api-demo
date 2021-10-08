@@ -63,3 +63,11 @@ In order to allow user and role administration using the KeyCloak Administration
 - `view-clients`
 - `view-realms`
 - `view-users`
+
+## Learning Resources
+ - https://www.youtube.com/watch?v=q50LxyGtEf0
+ - https://www.keycloak.org/archive/documentation-14.0.html
+ - https://stackoverflow.com/questions/48583361/how-can-i-read-all-users-using-keycloak-and-spring
+ - https://stackoverflow.com/questions/46470477/how-to-get-keycloak-users-via-rest-without-admin-account/46558530#46558530
+ - https://www.appsdeveloperblog.com/keycloak-rest-api-create-a-new-user/
+ 
